@@ -103,6 +103,7 @@ loss1_list, loss2_list, loss3_list, loss4_list = [], [], [], []
 Q1_list, Q2_list, Q3_list, Q4_list = [], [], [], []
 Act1_list, Act2_list, Act3_list, Act4_list = [], [], [], []
 average_return1_list, average_return2_list, average_return3_list, average_return4_list = [], [], [], []
+V1_list, V2_list, V3_list, V4_list = [], [], [], []
 cost_sum_list = []
 
 #------------------------------------------
@@ -234,6 +235,11 @@ for i in range(episodes):  # episodes个回合
             Cost3_list.append(state3[8])
             Cost4_list.append(state4[8])
 
+            V1_list.append(state1[0])
+            V2_list.append(state1[2])
+            V3_list.append(state1[4])
+            V4_list.append(state2[4])
+
             # 获取当前状态下需要采取的动作
             action1 = agent1.take_action(state1, i)
             action2 = agent2.take_action(state2, i)
@@ -334,6 +340,12 @@ for i in range(episodes):  # episodes个回合
                 'Cost1': Cost1_list[-1], 'Cost2': Cost2_list[-1],
                 'Cost3': Cost3_list[-1], 'Cost4': Cost4_list[-1],
                 'Cost_sum': Cost1_list[-1] + Cost2_list[-1] + Cost3_list[-1] + Cost4_list[-1]
+            }, global_step=iteri)
+
+            #V
+            writer.add_scalars("Voltage", {
+                'V1': V1_list[-1], 'V2': V2_list[-1],
+                'V3': V3_list[-1], 'V4': V4_list[-1],
             }, global_step=iteri)
 
             # 更新日志和进度条
